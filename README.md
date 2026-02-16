@@ -118,8 +118,8 @@ The frontend starts on `http://localhost:5173` and proxies API calls to the back
 ## Documentation
 
 - [Product Presentation](docs/InsureAgent_Product_Presentation.pptx) — 10-slide overview deck
-- [User Guide](docs/User_Guide.md) — Step-by-step usage instructions
-- [Functional Design Spec](docs/Functional_Design_Specification.md) — Architecture, data models, API contracts
+- [User Guide](docs/InsureAgent_User_Guide.docx) — Step-by-step usage instructions
+- [Functional Design Spec](docs/InsureAgent_Functional_Design_Specification.docx) — Architecture, data models, API contracts
 
 ## License
 
