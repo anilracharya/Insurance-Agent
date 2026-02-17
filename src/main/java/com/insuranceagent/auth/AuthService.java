@@ -8,6 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.UUID;
+
 @Service
 public class AuthService {
 
@@ -37,7 +40,7 @@ public class AuthService {
     }
 
     @Transactional
-    public AuthResponse register(RegisterRequest request) {
+    public AgentResponse createAgent(RegisterRequest request) {
         if (userRepository.existsByUsername(request.username())) {
             throw new IllegalArgumentException("Username already taken");
         }
@@ -54,7 +57,22 @@ public class AuthService {
 
         userRepository.save(user);
 
-        String token = jwtTokenProvider.generateToken(user.getUsername());
-        return new AuthResponse(token, user.getId(), user.getUsername(), user.getRole());
+        return new AgentResponse(user.getId(), user.getUsername(), user.getEmail(),
+                user.getFullName(), user.getRole(), user.getCreatedAt());
+    }
+
+    public List<AgentResponse> listAgents() {
+        return userRepository.findAll().stream()
+                .map(u -> new AgentResponse(u.getId(), u.getUsername(), u.getEmail(),
+                        u.getFullName(), u.getRole(), u.getCreatedAt()))
+                .toList();
+    }
+
+    @Transactional
+    public void deleteAgent(UUID id) {
+        if (!userRepository.existsById(id)) {
+            throw new IllegalArgumentException("Agent not found");
+        }
+        userRepository.deleteById(id);
     }
 }

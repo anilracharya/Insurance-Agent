@@ -18,7 +18,16 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface RegisterRequest {
+export interface AgentResponse {
+  id: string;
+  username: string;
+  email: string;
+  fullName?: string;
+  role: 'AGENT' | 'ADMIN';
+  createdAt: string;
+}
+
+export interface CreateAgentRequest {
   username: string;
   password: string;
   email: string;

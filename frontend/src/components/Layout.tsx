@@ -10,6 +10,7 @@ import {
   Shield,
   Menu,
   X,
+  UserPlus,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -21,10 +22,18 @@ const navItems = [
   { to: '/calendar', label: 'Calendar', icon: CalendarDays },
 ];
 
+const adminNavItems = [
+  { to: '/agents', label: 'Agents', icon: UserPlus },
+];
+
 export default function Layout() {
   const { user, logout } = useAuth();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const allNavItems = user?.role === 'ADMIN'
+    ? [...navItems, ...adminNavItems]
+    : navItems;
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -48,7 +57,7 @@ export default function Layout() {
         </div>
 
         <nav className="p-4 space-y-1">
-          {navItems.map((item) => {
+          {allNavItems.map((item) => {
             const active = location.pathname === item.to ||
               (item.to !== '/' && location.pathname.startsWith(item.to));
             return (
